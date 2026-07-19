@@ -429,6 +429,40 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── WHO I WORK WITH ── */}
+      <section style={{ padding: "88px 24px", background: "#F4F9FA" }}>
+        <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "48px" }} className="fade-up">
+            <p style={{ fontSize: "0.7rem", letterSpacing: "3px", color: TEAL, fontFamily: "'Manrope', sans-serif", marginBottom: "16px", textTransform: "uppercase", fontWeight: 700 }}>Ways to Book</p>
+            <h2 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: "clamp(1.9rem, 5vw, 2.7rem)", color: TEAL }}>
+              Who I Work With
+            </h2>
+            <div style={{ width: "36px", height: "2px", background: AQUA, margin: "18px auto 0" }} />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }} className="fade-up">
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+              <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>Private Clients</p>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+                One-to-one home visits for individuals and families. Book directly via WhatsApp or the enquiry form below — no referral needed, and appointments are arranged around what suits you.
+              </p>
+            </div>
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+              <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>GP Surgery Patients</p>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+                Many GP surgeries no longer offer ear wax removal on the NHS, or have long waits for it — it was dropped from the standard GP contract in many areas some years ago. You don't need a referral to book with me directly; if I find anything beyond straightforward wax build-up, I'll always point you back to your GP or an ENT specialist.
+              </p>
+            </div>
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+              <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>Retirement &amp; Care Homes</p>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+                Visits arranged directly with home managers or family members, seeing several residents in a single trip. A calm, unhurried approach that works well for residents with mobility challenges, memory conditions, or anyone who finds a trip to a clinic difficult.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── WHY IT MATTERS ── */}
       <section style={{ padding: "72px 24px", background: "#0E5C68" }}>
         <div style={{ maxWidth: "1080px", margin: "0 auto" }} className="fade-up">
