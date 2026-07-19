@@ -2,8 +2,10 @@
 
 Mobile ear wax removal website for **CM Ear Wax Removal**, run by Cristiana Mamularu, based in Bentley, Hampshire.
 
-**Live site (planned):** [www.cmearwaxremoval.co.uk](https://www.cmearwaxremoval.co.uk) — currently hosted elsewhere (IONOS); this repo is the replacement site, not yet live.
+**Live now (interim):** [quaydale.github.io/cm-earwax-removal](https://quaydale.github.io/cm-earwax-removal/)
+**Live site (once DNS is cut over):** [www.cmearwaxremoval.co.uk](https://www.cmearwaxremoval.co.uk) — currently hosted elsewhere (IONOS); this repo is the replacement site.
 **Admin panel:** `/admin.html`
+**Repo:** [github.com/Quaydale/cm-earwax-removal](https://github.com/Quaydale/cm-earwax-removal)
 
 Built as a sibling project to [restore-relax](https://github.com/Quaydale/restore-relax), reusing the same architecture with a clinical colour palette and content for ear care instead of massage therapy.
 
@@ -13,11 +15,11 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 
 - [x] Site content, design, coverage map, SEO/JSON-LD written
 - [x] Logo cropped from the practitioner's business card, stock photography sourced (Unsplash License, free for commercial use)
-- [ ] Supabase project — **not yet provisioned**. The original Supabase org (Quaydale, "Act1") is at its 2-project free-tier limit. `src/supabase.ts` and the CSP in `index.html`/`admin.html` still contain `REPLACE_ME` placeholders until a project is created and the schema below is applied
-- [ ] `notify-new-enquiry` Edge Function (Resend email) — not yet written; needs a live Supabase project first
+- [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
+- [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
+- [ ] `notify-new-enquiry` Edge Function (Resend email) — not yet written. Reviews and enquiries save to the database correctly, but nobody gets emailed yet — needs writing + deploying to the Supabase project (not accessible via this Claude Code session's Supabase MCP connection, so needs doing directly in the Supabase dashboard, or from a session connected to that account)
 - [ ] Real pricing — service prices are `TBC` throughout (App.tsx, index.html JSON-LD, llms.txt) — nothing was published to source from
-- [ ] DNS cutover at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages — this replaces the live production site and needs to be done by the domain owner, not by Claude
-- [ ] GitHub repo + first deploy
+- [ ] DNS cutover at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages — this replaces the live production site and needs to be done by the domain owner, not by Claude — see "Going live" below
 
 ---
 
@@ -40,14 +42,14 @@ cm-earwax-removal/
 │   ├── ContactForm.tsx      # Enquiry form → `enquiries` table (new vs. restore-relax)
 │   ├── CoverageMap.tsx      # Leaflet coverage map, centred on Bentley GU10 5LH
 │   ├── PrivacyPolicy.tsx    # Privacy policy modal
-│   ├── supabase.ts          # Supabase client + types — placeholder credentials
+│   ├── supabase.ts          # Supabase client + types — live project credentials
 │   └── fonts/               # Self-hosted Inter + Manrope variable woff2 files
 ├── public/
-│   ├── favicon.png / apple-touch-icon.png / logo-badge.png  # Cropped from the business card photo
+│   ├── favicon.png / favicon-512.png / apple-touch-icon.png / logo-badge.png  # Cropped from the business card photo
 │   ├── og-image.jpg         # Generated 1200×630 social share image
-│   ├── service-microsuction.jpg, service-irrigation.jpg, home-visit-comfort.jpg  # Unsplash License photos
+│   ├── service-microsuction.jpg, service-irrigation.jpg, service-manual-removal.jpg, home-visit-comfort.jpg  # Unsplash License photos
 │   ├── robots.txt / sitemap.xml / llms.txt
-├── docs/                    # ← GitHub Pages will serve this folder (populated on first build)
+├── docs/                    # ← GitHub Pages serves this folder from `main` (live)
 ├── .claude/
 │   ├── commands/seo-sync.md   # /seo-sync skill for Claude Code
 │   └── settings.json          # PreToolUse hook (reminds to run /seo-sync before push to main)
@@ -65,11 +67,13 @@ pnpm install
 pnpm dev        # Vite dev server
 ```
 
-The admin panel loads at `/admin.html`. Until a Supabase project is created, review/enquiry submission and admin login will fail — everything else (layout, map, content, modals) works against placeholder data.
+The admin panel loads at `/admin.html`. Both are fully wired up against the live Supabase project — reviews and enquiries submitted locally will land in the real database.
 
 ---
 
 ## Setting up the Supabase backend
+
+Already done for this project (project `volydinbgoelrtfzbeck`, live). Kept here for reference / in case of a rebuild:
 
 1. Create a new Supabase project (suggest `eu-west-2`, matching restore-relax).
 2. Run this schema:
@@ -118,28 +122,37 @@ create policy "Admins can delete enquiries" on enquiries
   for delete using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
 ```
 
-3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth).
-4. Update `src/supabase.ts` with the project URL + publishable key, and the CSP `connect-src` in `index.html` and `admin.html`.
-5. Write and deploy a `notify-new-enquiry` Edge Function (and optionally `notify-new-review`) with a Postgres trigger, following the same pattern as restore-relax's `notify-new-review` — see that project's README for the trigger shape. Needs a `RESEND_API_KEY` secret and a verified sending domain in Resend.
+3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth). **Not yet confirmed done for this project** — check under Authentication → Settings before relying on RLS as the only control.
+4. Update `src/supabase.ts` with the project URL + publishable key, and the CSP `connect-src` in `index.html`. — done.
+5. Write and deploy a `notify-new-enquiry` Edge Function (and optionally `notify-new-review`) with a Postgres trigger, following the same pattern as restore-relax's `notify-new-review` — see that project's README for the trigger shape. Needs a `RESEND_API_KEY` secret and a verified sending domain in Resend. — **not yet done.**
 
 ---
 
 ## Building and deploying
 
-Same manual process as restore-relax — no CI build step:
+Same manual process as restore-relax — no CI build step. Uses `--public-url "./"` (relative), not `"/"`, so the same build works both at the temporary GitHub Pages project subpath and at the real domain root once attached — see the CLAUDE.md gotcha about this.
 
 ```bash
 rm -rf .parcel-cache bundle-out
-npx parcel build index.html admin.html --dist-dir bundle-out --public-url "/"
+npx parcel build index.html admin.html --dist-dir bundle-out --public-url "./"
 
-for f in bundle-out/*.js bundle-out/*.png bundle-out/*.svg; do [ -f "$f" ] && cp "$f" docs/; done
+# IMPORTANT: do not delete old hashed files first — GitHub Pages' CDN can
+# serve a stale index.html referencing the previous hash for several
+# minutes after a push, and deleting the file it points at causes a
+# blank white page for anyone who hits that stale cache. Just add the
+# new ones; prune old orphaned hashes in a separate, later deploy.
+cp bundle-out/*.js bundle-out/*.css bundle-out/*.png bundle-out/*.woff2 docs/
 cp bundle-out/index.html docs/index.html
 cp bundle-out/admin.html docs/admin.html
+cp auth-confirm.html docs/auth-confirm.html
+cp public/robots.txt public/sitemap.xml public/llms.txt docs/
 
 echo "{\"v\":\"$(date +%s)\"}" > docs/version.json
+rm -rf .parcel-cache bundle-out dist
 
-git add docs/
+git add -A
 git commit -m "Deploy"
+git push origin dev
 git checkout main && git merge dev && git push origin main && git checkout dev
 ```
 
@@ -168,10 +181,10 @@ The `/seo-sync` Claude Code skill (`.claude/commands/seo-sync.md`) checks these 
 
 ## Going live
 
-Once the site is built and pushed to `main`, GitHub Pages will serve it from a `github.io` URL. To make `www.cmearwaxremoval.co.uk` point at it, the domain owner needs to:
+GitHub Pages is already enabled (`main` branch, `/docs`), serving [quaydale.github.io/cm-earwax-removal](https://quaydale.github.io/cm-earwax-removal/). To make `www.cmearwaxremoval.co.uk` point at it instead, the domain owner needs to:
 
-1. Add a `CNAME` file to `docs/` containing `www.cmearwaxremoval.co.uk`
-2. At the IONOS DNS settings for `cmearwaxremoval.co.uk`, add a `CNAME` record for `www` pointing at `<github-username>.github.io`, and either an `ALIAS`/`ANAME` or the standard GitHub Pages `A` records for the apex domain
-3. Enable the custom domain + HTTPS enforcement in the GitHub repo's Pages settings
+1. Add a `CNAME` file to `docs/` containing `www.cmearwaxremoval.co.uk` — **not yet done**
+2. At the IONOS DNS settings for `cmearwaxremoval.co.uk`, add a `CNAME` record for `www` pointing at `quaydale.github.io`, and either an `ALIAS`/`ANAME` or the standard GitHub Pages `A` records for the apex domain — **not yet done**
+3. Enable the custom domain + HTTPS enforcement in the GitHub repo's [Pages settings](https://github.com/Quaydale/cm-earwax-removal/settings/pages) — **not yet done**
 
-This is a change to a live production DNS record and should be done deliberately, once the new site has been reviewed.
+This is a change to a live production DNS record and should be done deliberately, once the new site has been reviewed. Before doing this, also confirm the SEO `og-image.jpg` and canonical URLs (already written pointing at `www.cmearwaxremoval.co.uk`) match whatever the final domain choice actually is.
