@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /auth-confirm.html
+
+Sitemap: https://www.cmearwaxremoval.co.uk/sitemap.xml

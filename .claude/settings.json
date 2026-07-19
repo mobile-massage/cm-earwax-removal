@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(* push origin main*)",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"About to push to production (main). Run /seo-sync first to decide whether any SEO files (structured data, sitemap, robots) or the llms.txt LLM/AI search discovery file need updating before this deploy goes live.\"}}'",
+            "statusMessage": "Checking if SEO and LLM/AI search files need updating..."
+          }
+        ]
+      }
+    ]
+  }
+}
