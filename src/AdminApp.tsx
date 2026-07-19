@@ -60,7 +60,7 @@ function LoginForm({ onLogin: _ }: { onLogin: () => void }) {
     <div style={{ minHeight: "100vh", background: "#0E2A30", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}>
       <div style={{ background: "#fff", borderRadius: "10px", padding: "48px 40px", width: "100%", maxWidth: "380px", boxShadow: "0 8px 40px rgba(0,0,0,0.3)" }}>
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <img src="/logo-badge.png" width={56} height={56} alt="CM Ear Wax Removal" style={{ display: "block", margin: "0 auto 16px", borderRadius: "50%" }} />
+          <img src="logo-badge.png" width={56} height={56} alt="CM Ear Wax Removal" style={{ display: "block", margin: "0 auto 16px", borderRadius: "50%" }} />
           <h1 style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 600, fontSize: "1.4rem", color: teal, margin: 0 }}>Admin</h1>
           <p style={{ fontSize: "0.8rem", color: "#8FA9AE", marginTop: "6px", letterSpacing: "2px", textTransform: "uppercase" }}>CM Ear Wax Removal</p>
         </div>
@@ -299,7 +299,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       <div style={{ background: teal, padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <img src="/logo-badge.png" width={32} height={32} alt="" style={{ borderRadius: "50%" }} />
+            <img src="logo-badge.png" width={32} height={32} alt="" style={{ borderRadius: "50%" }} />
             <span style={{ color: "#fff", fontFamily: "'Manrope', sans-serif", fontSize: "1.05rem", fontWeight: 600 }}>CM Ear Wax Removal</span>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>

@@ -15,7 +15,7 @@ const MUTED = "#5C7A80";
 const services = [
   {
     name: "Microsuction",
-    image: "/service-microsuction.jpg",
+    image: "service-microsuction.jpg",
     description: "Gentle, dry removal of wax under magnified vision using a medical-grade suction device — no water involved.",
     prices: [{ duration: "Both ears", price: "TBC" }],
     info: {
@@ -44,7 +44,7 @@ const services = [
   },
   {
     name: "Ear Irrigation",
-    image: "/service-irrigation.jpg",
+    image: "service-irrigation.jpg",
     description: "A controlled, pulsed flow of warm water safely flushes softened wax from the ear canal using a modern electronic irrigator.",
     prices: [{ duration: "Both ears", price: "TBC" }],
     info: {
@@ -72,7 +72,7 @@ const services = [
   },
   {
     name: "Manual Removal",
-    image: "/service-manual-removal.jpg",
+    image: "service-manual-removal.jpg",
     description: "Hard or oddly-positioned wax cleared by hand, using fine precision instruments under close magnification.",
     prices: [{ duration: "Both ears", price: "TBC" }],
     info: {
@@ -191,7 +191,7 @@ const InfoModal = ({ service, onClose }: { service: { name: string; info: Servic
 };
 
 const LogoBadge = ({ size = 112 }: { size?: number }) => (
-  <img src="/logo-badge.png" alt="CM Ear Wax Removal" width={size} height={size} loading="lazy" style={{ display: "block", margin: "0 auto", objectFit: "contain", borderRadius: "50%" }} />
+  <img src="logo-badge.png" alt="CM Ear Wax Removal" width={size} height={size} loading="lazy" style={{ display: "block", margin: "0 auto", objectFit: "contain", borderRadius: "50%" }} />
 );
 
 const WaIcon = ({ size = 22 }: { size?: number }) => (
@@ -336,7 +336,7 @@ export default function App() {
           {/* ── Circular badge logo ── */}
           <div className="hero-badge" style={{ position: "relative", display: "inline-block" }}>
             <img
-              src="/logo-badge.png"
+              src="logo-badge.png"
               alt="CM Ear Wax Removal"
               width={480}
               height={480}
@@ -402,7 +402,7 @@ export default function App() {
 
           <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
             <div>
-              <img src="/home-visit-comfort.jpg" alt="A home ear care visit" loading="lazy" width={800} height={533} style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block", objectFit: "cover" }} />
+              <img src="home-visit-comfort.jpg" alt="A home ear care visit" loading="lazy" width={800} height={533} style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block", objectFit: "cover" }} />
             </div>
             <div>
               <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.9, fontWeight: 400 }}>
