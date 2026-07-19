@@ -73,10 +73,10 @@ The admin panel loads at `/admin.html`. Both are fully wired up against the live
 
 ## Setting up the Supabase backend
 
-Already done for this project (project `volydinbgoelrtfzbeck`, live). Kept here for reference / in case of a rebuild:
+Already done for this project (project `volydinbgoelrtfzbeck`, live). Kept here for reference / in case of a rebuild. The admin emails below are redacted to placeholders since this is a public repo — the real values are configured directly in the live Supabase project's RLS policies, not committed anywhere in this repo.
 
 1. Create a new Supabase project (suggest `eu-west-2`, matching restore-relax).
-2. Run this schema:
+2. Run this schema, substituting the real admin email addresses for `<admin-email-1>` / `<admin-email-2>`:
 
 ```sql
 create table reviews (
@@ -106,23 +106,23 @@ create policy "Public can read approved reviews" on reviews
 create policy "Public can submit reviews" on reviews
   for insert with check (true);
 create policy "Admins can read all reviews" on reviews
-  for select using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 create policy "Admins can update reviews" on reviews
-  for update using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 create policy "Admins can delete reviews" on reviews
-  for delete using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 
 create policy "Public can submit enquiries" on enquiries
   for insert with check (true);
 create policy "Admins can read enquiries" on enquiries
-  for select using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 create policy "Admins can update enquiries" on enquiries
-  for update using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 create policy "Admins can delete enquiries" on enquiries
-  for delete using (auth.email() in ('redacted-admin-email-1@example.com', 'redacted-admin-email-2@example.com'));
+  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
 ```
 
-3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth). **Not yet confirmed done for this project** — check under Authentication → Settings before relying on RLS as the only control.
+3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth). — confirmed done and verified (public signup returns `signup_disabled`).
 4. Update `src/supabase.ts` with the project URL + publishable key, and the CSP `connect-src` in `index.html`. — done.
 5. Write and deploy a `notify-new-enquiry` Edge Function (and optionally `notify-new-review`) with a Postgres trigger, following the same pattern as restore-relax's `notify-new-review` — see that project's README for the trigger shape. Needs a `RESEND_API_KEY` secret and a verified sending domain in Resend. — **not yet done.**
 
