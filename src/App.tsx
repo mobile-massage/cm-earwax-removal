@@ -441,23 +441,32 @@ export default function App() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }} className="fade-up">
-            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px", display: "flex", flexDirection: "column" }}>
               <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>Private Clients</p>
-              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75, marginBottom: "20px" }}>
                 One-to-one home visits for individuals and families. Book directly via WhatsApp or the enquiry form below — no referral needed, and appointments are arranged around what suits you.
               </p>
+              <a href={`https://wa.me/${WA_NUMBER}`} target="_blank" rel="noopener noreferrer" style={{ marginTop: "auto", alignSelf: "flex-start", display: "inline-flex", alignItems: "center", gap: "8px", background: "#25D366", color: "#fff", padding: "10px 20px", borderRadius: "50px", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>
+                <WaIcon size={16} /> WhatsApp
+              </a>
             </div>
-            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px", display: "flex", flexDirection: "column" }}>
               <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>GP Surgery Patients</p>
-              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75, marginBottom: "20px" }}>
                 Many GP surgeries no longer offer ear wax removal on the NHS, or have long waits for it — it was dropped from the standard GP contract in many areas some years ago. You don't need a referral to book with me directly; if I find anything beyond straightforward wax build-up, I'll always point you back to your GP or an ENT specialist.
               </p>
+              <a href="#contact" style={{ marginTop: "auto", alignSelf: "flex-start", display: "inline-flex", alignItems: "center", gap: "8px", background: "none", border: `1.5px solid ${TEAL}`, color: TEAL, padding: "9px 20px", borderRadius: "50px", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>
+                Send an Enquiry
+              </a>
             </div>
-            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px" }}>
+            <div style={{ background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "10px", padding: "32px", display: "flex", flexDirection: "column" }}>
               <p style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.1rem", color: TEAL, fontWeight: 600, marginBottom: "12px" }}>Retirement &amp; Care Homes</p>
-              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75 }}>
+              <p style={{ fontSize: "0.95rem", color: TEXT, lineHeight: 1.75, marginBottom: "20px" }}>
                 Visits arranged directly with home managers or family members, seeing several residents in a single trip. A calm, unhurried approach that works well for residents with mobility challenges, memory conditions, or anyone who finds a trip to a clinic difficult.
               </p>
+              <a href="#contact" style={{ marginTop: "auto", alignSelf: "flex-start", display: "inline-flex", alignItems: "center", gap: "8px", background: "none", border: `1.5px solid ${TEAL}`, color: TEAL, padding: "9px 20px", borderRadius: "50px", fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", fontWeight: 600, textDecoration: "none" }}>
+                Send an Enquiry
+              </a>
             </div>
           </div>
         </div>
