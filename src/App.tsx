@@ -588,7 +588,7 @@ export default function App() {
             </h2>
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "18px auto 24px" }} />
             <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.85, fontWeight: 400, maxWidth: "620px", margin: "0 auto" }}>
-              Based in <strong style={{ fontWeight: 600, color: TEAL }}>Bentley, Hampshire</strong>, I cover a 10+ mile radius bringing professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot or Fleet — I come to you.
+              Based in <strong style={{ fontWeight: 600, color: TEAL }}>Bentley, Hampshire</strong>, I cover a 10+ mile radius bringing professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot or Godalming — I come to you.
             </p>
             <p style={{ fontSize: "1rem", color: MUTED, lineHeight: 1.8, fontWeight: 400, maxWidth: "560px", margin: "16px auto 0" }}>
               Not sure if you're in range? Just send a message on WhatsApp and I'll confirm.
@@ -601,7 +601,7 @@ export default function App() {
 
           {/* Town chips */}
           <div className="fade-up" style={{ marginTop: "32px", display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
-            {["Bentley", "Farnham", "Alton", "Odiham", "Bordon", "Haslemere", "Liphook", "Hindhead", "Aldershot", "Fleet"].map(town => (
+            {["Bentley", "Farnham", "Alton", "Odiham", "Bordon", "Haslemere", "Liphook", "Hindhead", "Aldershot", "Godalming"].map(town => (
               <span key={town} style={{ background: "#EAF4F5", border: "1px solid rgba(14,92,104,0.2)", padding: "6px 16px", borderRadius: "50px", fontSize: "0.85rem", color: TEXT, fontFamily: "'Manrope', sans-serif", fontWeight: 500 }}>
                 {town}
               </span>

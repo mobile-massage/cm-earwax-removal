@@ -16,7 +16,7 @@ const TOWNS: { name: string; pos: [number, number] }[] = [
   { name: "Liphook", pos: [51.0718, -0.8003] },
   { name: "Hindhead", pos: [51.1133, -0.7333] },
   { name: "Aldershot", pos: [51.2494, -0.7630] },
-  { name: "Fleet", pos: [51.2829, -0.8316] },
+  { name: "Godalming", pos: [51.1856, -0.6127] },
 ];
 
 export default function CoverageMap() {
