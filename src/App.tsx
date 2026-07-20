@@ -402,7 +402,7 @@ export default function App() {
 
           <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
             <div>
-              <img src="home-visit-comfort.jpg" alt="A home ear care visit" loading="lazy" width={800} height={533} style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block", objectFit: "cover" }} />
+              <img src="ear-examination.jpg" alt="Close-up of an ear examination using an otoscope" loading="lazy" width={1600} height={1067} style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block", objectFit: "cover" }} />
             </div>
             <div>
               <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.9, fontWeight: 400 }}>
