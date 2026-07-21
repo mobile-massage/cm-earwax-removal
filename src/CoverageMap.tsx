@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Centred on Bentley, Hampshire (GU10 5LH), just over a 10 mile radius
+// Centred on Bentley, Hampshire (GU10 5LH), just over a 20 mile radius
 const BENTLEY_CENTER: [number, number] = [51.1905, -0.8786];
 
-// Towns within ~12 miles of Bentley
+// Towns within ~22 miles of Bentley
 const TOWNS: { name: string; pos: [number, number] }[] = [
   { name: "Bentley", pos: [51.1905, -0.8786] },
   { name: "Farnham", pos: [51.2152, -0.7985] },
@@ -17,6 +17,8 @@ const TOWNS: { name: string; pos: [number, number] }[] = [
   { name: "Hindhead", pos: [51.1133, -0.7333] },
   { name: "Aldershot", pos: [51.2494, -0.7630] },
   { name: "Godalming", pos: [51.1856, -0.6127] },
+  { name: "Guildford", pos: [51.2356, -0.5732] },
+  { name: "Winchester", pos: [51.0613, -1.3132] },
 ];
 
 export default function CoverageMap() {
@@ -28,7 +30,7 @@ export default function CoverageMap() {
 
     const map = L.map(mapRef.current, {
       center: BENTLEY_CENTER,
-      zoom: 11,
+      zoom: 10,
       zoomControl: true,
       scrollWheelZoom: false,
     });
@@ -38,9 +40,9 @@ export default function CoverageMap() {
       maxZoom: 14,
     }).addTo(map);
 
-    // Coverage circle — just over 10 miles (12mi / ~19.3km) radius from Bentley
+    // Coverage circle — just over 20 miles (22mi / ~35.4km) radius from Bentley
     L.circle(BENTLEY_CENTER, {
-      radius: 19312,
+      radius: 35406,
       color: "#0E5C68",
       weight: 2,
       fillColor: "#2CA9BC",

@@ -330,7 +330,7 @@ export default function App() {
 
           {/* Visually hidden — page's primary heading */}
           <h1 style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>
-            CM Ear Wax Removal — Mobile Microsuction, Ear Irrigation & Manual Removal by Cristiana Mamularu across Hampshire & Surrey, for all ages
+            CM Ear Wax Removal — Mobile Microsuction, Ear Irrigation & Manual Removal by Cristiana Mamularu across Hampshire & Surrey, for adult patients
           </h1>
 
           {/* ── Circular badge logo ── */}
@@ -354,7 +354,7 @@ export default function App() {
             Ear wax removal, in the comfort of your home.
           </p>
           <p style={{ marginTop: "10px", fontSize: "0.95rem", color: "rgba(255,255,255,0.72)", maxWidth: "420px", margin: "10px auto 0", lineHeight: 1.7 }}>
-            Microsuction, ear irrigation &amp; manual removal, for all ages, at private homes, residential homes and care homes.
+            Microsuction, ear irrigation &amp; manual removal for adult patients, at private homes, residential homes and care homes.
           </p>
 
           {/* CTA */}
@@ -387,7 +387,7 @@ export default function App() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", marginBottom: "56px", maxWidth: "420px", marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ textAlign: "center" }}>
-              <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>2,500+</p>
+              <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>100+</p>
               <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Happy customers</p>
             </div>
             <div style={{ textAlign: "center" }}>
@@ -405,7 +405,7 @@ export default function App() {
                 I'm Cristiana, a fully trained, qualified and insured Ear Health Practitioner, certified by UK Microsuction. I provide safe, gentle ear wax removal using microsuction, ear irrigation and manual removal — in the comfort of your own home, a residential home or a care home.
               </p>
               <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.9, fontWeight: 400, marginTop: "18px" }}>
-                Every visit is unhurried and explained clearly, with your comfort and safety as the priority — no travel, no waiting rooms, and clearer hearing by the time I leave. I see clients of all ages, from children old enough to sit still for a few minutes through to elderly residents in care homes.
+                Every visit is unhurried and explained clearly, with your comfort and safety as the priority — no travel, no waiting rooms, and clearer hearing by the time I leave. I see adult patients of all ages, from younger adults through to elderly residents in care homes.
               </p>
               <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.9, fontWeight: 400, marginTop: "18px" }}>
                 Every visit includes a video otoscope, so your ear appears live on a small screen — you can follow along as the wax is found and cleared.
@@ -584,7 +584,7 @@ export default function App() {
             </h2>
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "18px auto 24px" }} />
             <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.85, fontWeight: 400, maxWidth: "620px", margin: "0 auto" }}>
-              Covering <strong style={{ fontWeight: 600, color: TEAL }}>Hampshire and Surrey</strong>, I bring professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot or Godalming — I come to you.
+              Covering <strong style={{ fontWeight: 600, color: TEAL }}>Hampshire and Surrey</strong>, I bring professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot, Godalming, Guildford or Winchester — I come to you.
             </p>
             <p style={{ fontSize: "1rem", color: MUTED, lineHeight: 1.8, fontWeight: 400, maxWidth: "560px", margin: "16px auto 0" }}>
               Not sure if you're in range? Just send a message on WhatsApp and I'll confirm.
@@ -597,7 +597,7 @@ export default function App() {
 
           {/* Town chips */}
           <div className="fade-up" style={{ marginTop: "32px", display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
-            {["Bentley", "Farnham", "Alton", "Odiham", "Bordon", "Haslemere", "Liphook", "Hindhead", "Aldershot", "Godalming"].map(town => (
+            {["Bentley", "Farnham", "Alton", "Odiham", "Bordon", "Haslemere", "Liphook", "Hindhead", "Aldershot", "Godalming", "Guildford", "Winchester"].map(town => (
               <span key={town} style={{ background: "#EAF4F5", border: "1px solid rgba(14,92,104,0.2)", padding: "6px 16px", borderRadius: "50px", fontSize: "0.85rem", color: TEXT, fontFamily: "'Manrope', sans-serif", fontWeight: 500 }}>
                 {town}
               </span>
