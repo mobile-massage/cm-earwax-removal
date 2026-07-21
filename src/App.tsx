@@ -385,13 +385,14 @@ export default function App() {
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "24px auto 0" }} />
           </div>
 
-          <div style={{ textAlign: "center", marginBottom: "56px" }}>
-            <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>100+</p>
-            <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Happy customers</p>
-          </div>
-
           <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
             <div>
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
+                <div style={{ display: "inline-flex", alignItems: "baseline", gap: "8px", background: "#EAF4F5", border: "1px solid rgba(14,92,104,0.15)", borderRadius: "50px", padding: "10px 22px" }}>
+                  <span style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "1.15rem", color: TEAL }}>100+</span>
+                  <span style={{ fontFamily: "'Manrope', sans-serif", fontSize: "0.85rem", color: TEAL, fontWeight: 600 }}>Happy customers</span>
+                </div>
+              </div>
               <img src="ear-examination.jpg" alt="Close-up of an ear examination using an otoscope" loading="lazy" width={1600} height={1067} style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block", objectFit: "cover" }} />
             </div>
             <div>
