@@ -330,7 +330,7 @@ export default function App() {
 
           {/* Visually hidden — page's primary heading */}
           <h1 style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>
-            CM Ear Wax Removal — Mobile Microsuction, Ear Irrigation & Manual Removal by Cristiana Mamularu in Bentley, Hampshire, for all ages
+            CM Ear Wax Removal — Mobile Microsuction, Ear Irrigation & Manual Removal by Cristiana Mamularu across Hampshire & Surrey, for all ages
           </h1>
 
           {/* ── Circular badge logo ── */}
@@ -385,7 +385,7 @@ export default function App() {
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "24px auto 0" }} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "56px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", marginBottom: "56px", maxWidth: "420px", marginLeft: "auto", marginRight: "auto" }}>
             <div style={{ textAlign: "center" }}>
               <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>2,500+</p>
               <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Happy customers</p>
@@ -393,10 +393,6 @@ export default function App() {
             <div style={{ textAlign: "center" }}>
               <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>4,800+</p>
               <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Successful treatments</p>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>10+</p>
-              <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Years of experience</p>
             </div>
           </div>
 
@@ -588,7 +584,7 @@ export default function App() {
             </h2>
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "18px auto 24px" }} />
             <p style={{ fontSize: "1.1rem", color: TEXT, lineHeight: 1.85, fontWeight: 400, maxWidth: "620px", margin: "0 auto" }}>
-              Based in <strong style={{ fontWeight: 600, color: TEAL }}>Bentley, Hampshire</strong>, I cover a 10+ mile radius bringing professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot or Godalming — I come to you.
+              Covering <strong style={{ fontWeight: 600, color: TEAL }}>Hampshire and Surrey</strong>, I bring professional ear care directly to your home, residential home or care home. Whether you're in Farnham, Alton, Odiham, Bordon, Haslemere, Liphook, Hindhead, Aldershot or Godalming — I come to you.
             </p>
             <p style={{ fontSize: "1rem", color: MUTED, lineHeight: 1.8, fontWeight: 400, maxWidth: "560px", margin: "16px auto 0" }}>
               Not sure if you're in range? Just send a message on WhatsApp and I'll confirm.
