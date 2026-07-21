@@ -2,11 +2,11 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Centred on the midpoint between Guildford and Winchester, so both towns
-// sit right on the edge of the coverage circle (~17 mile radius)
+// Centred on the midpoint between Guildford and Winchester, with the
+// radius set just beyond both towns (~18 mile radius)
 const MAP_CENTER: [number, number] = [51.1490, -0.9439];
 
-// All towns fall within ~17 miles of the centre; Guildford and Winchester sit on the edge
+// All towns fall within ~18 miles of the centre; Guildford and Winchester sit just inside the edge
 const TOWNS: { name: string; pos: [number, number] }[] = [
   { name: "Bentley", pos: [51.1905, -0.8786] },
   { name: "Farnham", pos: [51.2152, -0.7985] },
@@ -41,9 +41,9 @@ export default function CoverageMap() {
       maxZoom: 14,
     }).addTo(map);
 
-    // Coverage circle — ~17.13mi / 27.65km radius, so Guildford and Winchester sit on the edge
+    // Coverage circle — 18mi / 28.97km radius, just beyond Guildford and Winchester (~17.13mi from centre)
     L.circle(MAP_CENTER, {
-      radius: 27650,
+      radius: 28968,
       color: "#0E5C68",
       weight: 2,
       fillColor: "#2CA9BC",
