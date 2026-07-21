@@ -385,15 +385,9 @@ export default function App() {
             <div style={{ width: "36px", height: "2px", background: AQUA, margin: "24px auto 0" }} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", marginBottom: "56px", maxWidth: "420px", marginLeft: "auto", marginRight: "auto" }}>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>100+</p>
-              <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Happy customers</p>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>4,800+</p>
-              <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Successful treatments</p>
-            </div>
+          <div style={{ textAlign: "center", marginBottom: "56px" }}>
+            <p style={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700, fontSize: "clamp(1.8rem, 5vw, 2.4rem)", color: TEAL }}>100+</p>
+            <p style={{ fontSize: "0.8rem", color: MUTED, marginTop: "4px" }}>Happy customers</p>
           </div>
 
           <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "center" }}>
