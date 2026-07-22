@@ -23,9 +23,9 @@ Defined in `.claude/commands/seo-sync.md`. Decides whether the traditional SEO f
 - The site is built with `--public-url "./"` (relative), not `"/"` — this lets the same `docs/` build work both at a GitHub Pages project subpath (`quaydale.github.io/cm-earwax-removal/`) and at the real custom domain root once attached. Don't change this back to `"/"` unless the project subpath is no longer needed.
 - `logo-badge.png`, `favicon.png`, `apple-touch-icon.png`, `og-image.jpg`, and the service/about photos are referenced via plain string paths (`<img src="logo-badge.png">`, no leading slash), not JS imports — Parcel's asset graph never sees them, so they don't get hashed or auto-copied, and they must stay relative (no leading `/`) for the same subpath-compatibility reason above. Copy them from `public/` to `docs/` by hand on every deploy that touches them. The `og:image`/`twitter:image` **meta tags** are the one exception — those must stay full absolute URLs (`https://www.cmearwaxremoval.co.uk/og-image.jpg`) since they're read by external crawlers, not resolved relative to the page.
 
-## Pricing
+## Pricing is not displayed publicly
 
-£65 flat fee for ear wax removal (one or both ears, whichever combination of microsuction/irrigation/manual removal is needed, up to 30 minutes), £25 consultation-only fee if nothing needs removing. Set in `src/App.tsx` (`services[].prices`), `index.html` JSON-LD `hasOfferCatalog`, and `public/llms.txt` — keep all three in sync (this is exactly what `/seo-sync` checks for).
+Real prices exist (£65 flat fee for ear wax removal regardless of method, £25 consultation-only if nothing needs removing) but the site deliberately shows "Contact me" / "get in touch" instead of the numbers in `src/App.tsx`, `index.html`, and `public/llms.txt` — this was a deliberate choice, not a placeholder. Don't reintroduce the numeric prices to the public-facing content without checking first.
 
 ## Review & enquiry notification email
 

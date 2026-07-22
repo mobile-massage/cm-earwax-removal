@@ -18,7 +18,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
 - [ ] `notify-new-enquiry` Edge Function (Resend email) — not yet written. Reviews and enquiries save to the database correctly, but nobody gets emailed yet — needs writing + deploying to the Supabase project (not accessible via this Claude Code session's Supabase MCP connection, so needs doing directly in the Supabase dashboard, or from a session connected to that account)
-- [x] Real pricing set — £65 flat fee for ear wax removal (any method combination), £25 consultation-only fee — across App.tsx, index.html JSON-LD and llms.txt
+- [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [ ] DNS cutover at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages — this replaces the live production site and needs to be done by the domain owner, not by Claude — see "Going live" below
 
 ---
