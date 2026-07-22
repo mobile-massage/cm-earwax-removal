@@ -215,7 +215,7 @@ function useScrollAnimation() {
   }, []);
 }
 
-const WA_NUMBER = "447491024311";
+const WA_NUMBER = "447482888556";
 
 export default function App() {
   useScrollAnimation();
