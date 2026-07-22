@@ -17,7 +17,7 @@ const services = [
     name: "Microsuction",
     image: "service-microsuction.jpg",
     description: "Gentle, dry removal of wax under magnified vision using a medical-grade suction device — no water involved.",
-    prices: [{ duration: "Both ears", price: "TBC" }],
+    prices: [{ duration: "Both ears", price: "£65" }],
     info: {
       origin: "Developed within ENT departments in the second half of the 20th century as a refinement of ear care carried out under an operating microscope.",
       history: "Before microsuction, ear syringing — flushing the canal with water — was the standard approach, first described as a dedicated syringe technique by the French otologist Jean Marc Gaspard Itard in 1821, itself building on wax-removal methods recorded as far back as the 1st century AD. Microsuction developed later as ENT specialists adapted binocular microscopes and medical suction units to remove wax and debris under direct vision rather than by flushing. Over the past decade it has become the preferred method across NHS and private ear care, valued for being drier, more precise and generally better tolerated than irrigation.",
@@ -46,7 +46,7 @@ const services = [
     name: "Ear Irrigation",
     image: "service-irrigation.jpg",
     description: "A controlled, pulsed flow of warm water safely flushes softened wax from the ear canal using a modern electronic irrigator.",
-    prices: [{ duration: "Both ears", price: "TBC" }],
+    prices: [{ duration: "Both ears", price: "£65" }],
     info: {
       origin: "Ear syringing dates back at least two thousand years — the Roman physician Aulus Cornelius Celsus described flushing the ear canal in the 1st century AD, with the first dedicated syringe technique recorded by French otologist Jean Marc Gaspard Itard in 1821.",
       history: "For most of the 20th century, manual syringing with a metal syringe and considerable hand pressure was the standard treatment for wax build-up. It has since been replaced almost everywhere by electronic irrigation, which delivers a controlled, low-pressure pulsed water jet instead of manual force — greatly reducing the risk of the pain, perforation and dizziness that made old-style syringing unpopular.",
@@ -74,7 +74,7 @@ const services = [
     name: "Manual Removal",
     image: "service-manual-removal.jpg",
     description: "Hard or oddly-positioned wax cleared by hand, using fine precision instruments under close magnification.",
-    prices: [{ duration: "Both ears", price: "TBC" }],
+    prices: [{ duration: "Both ears", price: "£65" }],
     info: {
       origin: "A traditional ENT technique using fine instruments such as curettes and micro forceps under direct or magnified vision — it predates both modern microsuction and electronic irrigation.",
       history: "Long before suction devices or electronic irrigators existed, hooking or scraping wax out by hand — using simple curettes — was the only option ear specialists had. The technique never went away: it's still the best answer whenever wax is too hard, sticky or tucked somewhere suction and water can't reach.",
@@ -548,6 +548,10 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          <p className="fade-up" style={{ textAlign: "center", fontSize: "0.9rem", color: MUTED, marginTop: "20px" }}>
+            One price whichever methods are needed, up to 30 minutes. If there's nothing to remove, you only pay a <strong style={{ color: TEAL }}>£25</strong> consultation fee.
+          </p>
 
           {/* Safety advisory */}
           <div className="fade-up" style={{ marginTop: "24px", background: "#fff", border: "1px solid rgba(14,92,104,0.15)", borderLeft: `3px solid ${AQUA}`, borderRadius: "10px", padding: "32px 36px" }}>

@@ -23,9 +23,9 @@ Defined in `.claude/commands/seo-sync.md`. Decides whether the traditional SEO f
 - The site is built with `--public-url "./"` (relative), not `"/"` — this lets the same `docs/` build work both at a GitHub Pages project subpath (`quaydale.github.io/cm-earwax-removal/`) and at the real custom domain root once attached. Don't change this back to `"/"` unless the project subpath is no longer needed.
 - `logo-badge.png`, `favicon.png`, `apple-touch-icon.png`, `og-image.jpg`, and the service/about photos are referenced via plain string paths (`<img src="logo-badge.png">`, no leading slash), not JS imports — Parcel's asset graph never sees them, so they don't get hashed or auto-copied, and they must stay relative (no leading `/`) for the same subpath-compatibility reason above. Copy them from `public/` to `docs/` by hand on every deploy that touches them. The `og:image`/`twitter:image` **meta tags** are the one exception — those must stay full absolute URLs (`https://www.cmearwaxremoval.co.uk/og-image.jpg`) since they're read by external crawlers, not resolved relative to the page.
 
-## Pricing is TBC
+## Pricing
 
-Service prices in `src/App.tsx`, `index.html` JSON-LD, and `public/llms.txt` are all placeholder `TBC` values — there was no published pricing to source from. Once real prices are confirmed, update all three in the same change (this is exactly what `/seo-sync` checks for).
+£65 flat fee for ear wax removal (one or both ears, whichever combination of microsuction/irrigation/manual removal is needed, up to 30 minutes), £25 consultation-only fee if nothing needs removing. Set in `src/App.tsx` (`services[].prices`), `index.html` JSON-LD `hasOfferCatalog`, and `public/llms.txt` — keep all three in sync (this is exactly what `/seo-sync` checks for).
 
 ## Review & enquiry notification email
 
