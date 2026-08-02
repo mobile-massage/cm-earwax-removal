@@ -20,6 +20,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [ ] `notify-new-enquiry` Edge Function (Resend email) — not yet written. Reviews and enquiries save to the database correctly, but nobody gets emailed yet — needs writing + deploying to the Supabase project (not accessible via this Claude Code session's Supabase MCP connection, so needs doing directly in the Supabase dashboard, or from a session connected to that account)
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [ ] DNS cutover at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages — this replaces the live production site and needs to be done by the domain owner, not by Claude — see "Going live" below
+- [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
 
 ---
 
