@@ -31,7 +31,7 @@ Read the following files:
 - This is the file AI assistants read to summarize the business — keep it in plain, complete sentences, not just keyword lists
 
 ### docs/robots.txt
-- Sitemap URL must point to `https://www.cmearwaxremoval.co.uk/sitemap.xml`
+- Sitemap URL must point to `https://cmearwaxremoval.co.uk/sitemap.xml`
 - Should allow all crawlers
 
 ## Instructions

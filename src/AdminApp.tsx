@@ -43,7 +43,7 @@ function LoginForm({ onLogin: _ }: { onLogin: () => void }) {
     setError("");
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: "https://www.cmearwaxremoval.co.uk/auth-confirm.html" },
+      options: { emailRedirectTo: "https://cmearwaxremoval.co.uk/auth-confirm.html" },
     });
     if (error) setError(error.message || "Something went wrong — please try again.");
     else setSent(true);

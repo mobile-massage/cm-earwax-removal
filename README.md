@@ -2,8 +2,8 @@
 
 Mobile ear wax removal website for **CM Ear Wax Removal**, run by Cristiana Mamularu, based in Bentley, Hampshire.
 
-**Live now (interim):** [mobile-massage.github.io/cm-earwax-removal](https://mobile-massage.github.io/cm-earwax-removal/)
-**Live site (once DNS is cut over):** [www.cmearwaxremoval.co.uk](https://www.cmearwaxremoval.co.uk) — currently hosted elsewhere (IONOS); this repo is the replacement site.
+**Live site:** [cmearwaxremoval.co.uk](https://cmearwaxremoval.co.uk) — DNS is cut over, custom domain enabled on GitHub Pages with an approved HTTPS certificate.
+**GitHub Pages URL (fallback):** [mobile-massage.github.io/cm-earwax-removal](https://mobile-massage.github.io/cm-earwax-removal/)
 **Admin panel:** `/admin.html`
 **Repo:** [github.com/mobile-massage/cm-earwax-removal](https://github.com/mobile-massage/cm-earwax-removal)
 
@@ -19,7 +19,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
 - [ ] `notify-new-enquiry` Edge Function (Resend email) — not yet written. Reviews and enquiries save to the database correctly, but nobody gets emailed yet — needs writing + deploying to the Supabase project (not accessible via this Claude Code session's Supabase MCP connection, so needs doing directly in the Supabase dashboard, or from a session connected to that account)
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
-- [ ] DNS cutover at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages — this replaces the live production site and needs to be done by the domain owner, not by Claude — see "Going live" below
+- [x] DNS cut over at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages. Custom domain enabled in Pages settings, HTTPS certificate approved (covers both the apex and `www`). Canonical domain is the **apex** (`cmearwaxremoval.co.uk`, no `www`) — all canonical URLs, JSON-LD `@id`/`url`, sitemap, robots.txt and llms.txt point there. HTTPS enforcement is not yet turned on in Pages settings — **not yet done**
 - [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
 
 ---
@@ -182,10 +182,10 @@ The `/seo-sync` Claude Code skill (`.claude/commands/seo-sync.md`) checks these 
 
 ## Going live
 
-GitHub Pages is already enabled (`main` branch, `/docs`), serving [mobile-massage.github.io/cm-earwax-removal](https://mobile-massage.github.io/cm-earwax-removal/). To make `www.cmearwaxremoval.co.uk` point at it instead, the domain owner needs to:
+Done — DNS is cut over and the custom domain is live at [cmearwaxremoval.co.uk](https://cmearwaxremoval.co.uk):
 
-1. Add a `CNAME` file to `docs/` containing `www.cmearwaxremoval.co.uk` — **not yet done**
-2. At the IONOS DNS settings for `cmearwaxremoval.co.uk`, add a `CNAME` record for `www` pointing at `mobile-massage.github.io`, and either an `ALIAS`/`ANAME` or the standard GitHub Pages `A` records for the apex domain — **not yet done**
-3. Enable the custom domain + HTTPS enforcement in the GitHub repo's [Pages settings](https://github.com/mobile-massage/cm-earwax-removal/settings/pages) — **not yet done**
+1. `docs/CNAME` contains `cmearwaxremoval.co.uk` (the apex domain — canonical, no `www`)
+2. IONOS DNS points the domain at GitHub Pages
+3. Custom domain is enabled in the repo's [Pages settings](https://github.com/mobile-massage/cm-earwax-removal/settings/pages), with an approved HTTPS certificate covering both the apex and `www`
 
-This is a change to a live production DNS record and should be done deliberately, once the new site has been reviewed. Before doing this, also confirm the SEO `og-image.jpg` and canonical URLs (already written pointing at `www.cmearwaxremoval.co.uk`) match whatever the final domain choice actually is.
+One step remaining: **HTTPS enforcement** is not yet turned on in Pages settings (`https_enforced: false`) — turn it on once you're confident nothing is still linking to the plain `http://` version.
