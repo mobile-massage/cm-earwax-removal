@@ -57,12 +57,12 @@
     <div class="tick">✓</div>
     <h1>Account confirmed</h1>
     <p>Your admin account is ready.<br>Click below to sign in.</p>
-    <a href="/admin.html">Go to Admin</a>
+    <a href="admin.html">Go to Admin</a>
   </div>
   <script>
     // If Supabase tokens are in the hash, redirect to admin so it can pick them up
     if (window.location.hash && window.location.hash.includes('access_token')) {
-      window.location.replace('/admin.html' + window.location.hash);
+      window.location.replace('admin.html' + window.location.hash);
     }
   </script>
 </body>

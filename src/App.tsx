@@ -656,7 +656,7 @@ export default function App() {
             Privacy Policy
           </button>
           <span style={{ margin: "0 8px", color: "#33474C" }}>·</span>
-          <a href="/admin.html" style={{ color: "#4FC3D9", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", textDecoration: "underline" }}>
+          <a href="admin.html" style={{ color: "#4FC3D9", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", textDecoration: "underline" }}>
             Admin
           </a>
         </p>
