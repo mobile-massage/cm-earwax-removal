@@ -17,7 +17,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] Logo cropped from the practitioner's business card, stock photography sourced (Unsplash License, free for commercial use)
 - [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
-- [ ] `notify-new-submission` Edge Function (Resend email) — deployed and wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), confirmed firing end-to-end on insert to `enquiries`/`reviews`. Blocked on the last hop: Resend's sandbox sender can only deliver to the Resend account's own signup email, not `cristina_cristina973@yahoo.com` — needs a verified sending domain (DNS records at IONOS) before real emails go out — see "Email notification for the contact form and reviews" below
+- [x] `notify-new-submission` Edge Function (Resend email) — deployed, wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), sending domain `cmearwaxremoval.co.uk` verified in Resend. Confirmed working end-to-end: inserting into `enquiries` triggers a real `200` from Resend and an email lands at `cristina_cristina973@yahoo.com` — see "Email notification for the contact form and reviews" below
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [x] DNS cut over at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages. Custom domain enabled in Pages settings, HTTPS certificate approved (covers both the apex and `www`). Canonical domain is the **apex** (`cmearwaxremoval.co.uk`, no `www`) — all canonical URLs, JSON-LD `@id`/`url`, sitemap, robots.txt and llms.txt point there. HTTPS enforcement is not yet turned on in Pages settings — **not yet done**
 - [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
@@ -131,24 +131,27 @@ create policy "Admins can delete enquiries" on enquiries
 
 ## Email notification for the contact form and reviews
 
-**Status: deployed and verified working, except the final email delivery hop — see "Known blocker" below.**
+**Status: done — deployed, verified end-to-end, real emails delivering to `cristina_cristina973@yahoo.com`.**
 
-The contact form and review form already write to `enquiries` / `reviews` correctly — this just adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails `cristina_cristina973@yahoo.com` via [Resend](https://resend.com).
+The contact form and review form already write to `enquiries` / `reviews` correctly — this adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails `cristina_cristina973@yahoo.com` via [Resend](https://resend.com), sending from `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>`.
 
-1. **Create a free Resend account** at [resend.com](https://resend.com) and grab an API key (Settings → API Keys).
-2. **Set the secret** in the Supabase dashboard: Project Settings → Edge Functions → Secrets → add `RESEND_API_KEY` with the key from step 1. — **done**
-3. **Deploy the function**: Edge Functions → Deploy a new function → name it `notify-new-submission` → paste in the contents of `supabase/functions/notify-new-submission/index.ts`. — **done**
-4. **Wire up the trigger**: the dashboard's "Database Webhooks" UI (Database → Webhooks) is the normal way to do this, but on this project it fails with `ERROR: 3F000: schema "supabase_functions" does not exist` — that internal schema was never provisioned. Worked around it with a plain SQL trigger using `pg_net` directly instead (same underlying mechanism, just wired up by hand): run `supabase/migrations/20260802_notify_new_submission_trigger.sql` in the SQL Editor. Requires the `pg_net` extension enabled first (Database → Extensions → pg_net → enable, default schema is fine). — **done**, both triggers (`on_enquiry_insert`, `on_review_insert`) are live.
-5. **Test it**: insert a test row (`insert into public.enquiries (name, contact, message) values (...)`) and check `select * from net._http_response order by id desc limit 5;` for the result — a `502` with a Resend error in the body means the trigger→function→Resend chain is working but Resend itself rejected the send (see below); a `200` means an email actually went out.
+What's set up:
 
-### Known blocker: Resend sandbox restriction
+1. **Resend account + API key**, stored as the `RESEND_API_KEY` secret in the Supabase dashboard (Project Settings → Edge Functions → Secrets).
+2. **`cmearwaxremoval.co.uk` verified as a sending domain** in Resend (Domains → the DKIM/SPF/DMARC records were added at IONOS) — this is what allows delivery to arbitrary recipients rather than just the Resend account's own signup email.
+3. **The function deployed** (Edge Functions → `notify-new-submission`).
+4. **The trigger wired up via SQL, not the dashboard's Database Webhooks UI** — that UI fails on this project with `ERROR: 3F000: schema "supabase_functions" does not exist` (that internal schema was never provisioned). Worked around it with a plain SQL trigger using `pg_net` directly instead (same underlying mechanism, just wired up by hand): `supabase/migrations/20260802_notify_new_submission_trigger.sql`, which needs the `pg_net` extension enabled first (Database → Extensions → pg_net). Both triggers (`on_enquiry_insert`, `on_review_insert`) are live.
 
-Verified via the test above: the trigger fires, the function is invoked, auth succeeds (the publishable API key satisfies the function's "Verify JWT with legacy secret" setting — no extra secret needed for this call), and Resend is reached — but Resend returns `403 validation_error`: *"You can only send testing emails to your own email address... To send emails to other recipients, please verify a domain at resend.com/domains, and change the `from` address to an email using this domain."*
+To verify it's still working after any change, insert a test row and check the result:
 
-The function currently sends `from: "CM Ear Wax Removal <onboarding@resend.dev>"`, Resend's shared sandbox sender — it can only deliver to the email address used to sign up for the Resend account, not to `cristina_cristina973@yahoo.com`. To actually receive emails:
+```sql
+insert into public.enquiries (name, contact, message) values ('Test', 'test@example.com', 'test message');
+select id, status_code, created, (content::text) as body from net._http_response order by id desc limit 5;
+-- then clean up:
+delete from public.enquiries where name = 'Test';
+```
 
-1. In Resend, go to Domains → Add Domain → `cmearwaxremoval.co.uk`, then add the DKIM/SPF/DMARC DNS records it gives you at IONOS.
-2. Once verified, change the `from` address in `supabase/functions/notify-new-submission/index.ts` to something like `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>` and redeploy the function.
+A `200` with `{"ok":true}` means the email actually went out. A `502` with a Resend error in the body means the trigger→function→Resend chain works but Resend itself rejected the send (e.g. if the domain verification ever lapses).
 
 ---
 
