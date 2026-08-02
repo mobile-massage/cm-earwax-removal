@@ -2,10 +2,10 @@
 
 Mobile ear wax removal website for **CM Ear Wax Removal**, run by Cristiana Mamularu, based in Bentley, Hampshire.
 
-**Live now (interim):** [quaydale.github.io/cm-earwax-removal](https://quaydale.github.io/cm-earwax-removal/)
+**Live now (interim):** [mobile-massage.github.io/cm-earwax-removal](https://mobile-massage.github.io/cm-earwax-removal/)
 **Live site (once DNS is cut over):** [www.cmearwaxremoval.co.uk](https://www.cmearwaxremoval.co.uk) — currently hosted elsewhere (IONOS); this repo is the replacement site.
 **Admin panel:** `/admin.html`
-**Repo:** [github.com/Quaydale/cm-earwax-removal](https://github.com/Quaydale/cm-earwax-removal)
+**Repo:** [github.com/mobile-massage/cm-earwax-removal](https://github.com/mobile-massage/cm-earwax-removal)
 
 Built as a sibling project to [restore-relax](https://github.com/Quaydale/restore-relax), reusing the same architecture with a clinical colour palette and content for ear care instead of massage therapy.
 
@@ -181,10 +181,10 @@ The `/seo-sync` Claude Code skill (`.claude/commands/seo-sync.md`) checks these 
 
 ## Going live
 
-GitHub Pages is already enabled (`main` branch, `/docs`), serving [quaydale.github.io/cm-earwax-removal](https://quaydale.github.io/cm-earwax-removal/). To make `www.cmearwaxremoval.co.uk` point at it instead, the domain owner needs to:
+GitHub Pages is already enabled (`main` branch, `/docs`), serving [mobile-massage.github.io/cm-earwax-removal](https://mobile-massage.github.io/cm-earwax-removal/). To make `www.cmearwaxremoval.co.uk` point at it instead, the domain owner needs to:
 
 1. Add a `CNAME` file to `docs/` containing `www.cmearwaxremoval.co.uk` — **not yet done**
-2. At the IONOS DNS settings for `cmearwaxremoval.co.uk`, add a `CNAME` record for `www` pointing at `quaydale.github.io`, and either an `ALIAS`/`ANAME` or the standard GitHub Pages `A` records for the apex domain — **not yet done**
-3. Enable the custom domain + HTTPS enforcement in the GitHub repo's [Pages settings](https://github.com/Quaydale/cm-earwax-removal/settings/pages) — **not yet done**
+2. At the IONOS DNS settings for `cmearwaxremoval.co.uk`, add a `CNAME` record for `www` pointing at `mobile-massage.github.io`, and either an `ALIAS`/`ANAME` or the standard GitHub Pages `A` records for the apex domain — **not yet done**
+3. Enable the custom domain + HTTPS enforcement in the GitHub repo's [Pages settings](https://github.com/mobile-massage/cm-earwax-removal/settings/pages) — **not yet done**
 
 This is a change to a live production DNS record and should be done deliberately, once the new site has been reviewed. Before doing this, also confirm the SEO `og-image.jpg` and canonical URLs (already written pointing at `www.cmearwaxremoval.co.uk`) match whatever the final domain choice actually is.
