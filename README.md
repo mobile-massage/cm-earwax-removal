@@ -17,7 +17,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] Logo cropped from the practitioner's business card, stock photography sourced (Unsplash License, free for commercial use)
 - [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
-- [ ] `notify-new-enquiry` Edge Function (Resend email) — code written at `supabase/functions/notify-new-enquiry/index.ts`, emails `cristina_cristina973@yahoo.com` on new enquiries. Not yet deployed — not accessible via this Claude Code session's Supabase MCP connection, so needs deploying directly in the Supabase dashboard (or from a session connected to that account) — see "Email notification for the contact form" below for exact steps
+- [ ] `notify-new-submission` Edge Function (Resend email) — code written at `supabase/functions/notify-new-submission/index.ts`, emails `cristina_cristina973@yahoo.com` on new enquiries and new reviews. Not yet deployed — not accessible via this Claude Code session's Supabase MCP connection, so needs deploying directly in the Supabase dashboard (or from a session connected to that account) — see "Email notification for the contact form and reviews" below for exact steps
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [x] DNS cut over at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages. Custom domain enabled in Pages settings, HTTPS certificate approved (covers both the apex and `www`). Canonical domain is the **apex** (`cmearwaxremoval.co.uk`, no `www`) — all canonical URLs, JSON-LD `@id`/`url`, sitemap, robots.txt and llms.txt point there. HTTPS enforcement is not yet turned on in Pages settings — **not yet done**
 - [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
@@ -125,26 +125,23 @@ create policy "Admins can delete enquiries" on enquiries
 
 3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth). — confirmed done and verified (public signup returns `signup_disabled`).
 4. Update `src/supabase.ts` with the project URL + publishable key, and the CSP `connect-src` in `index.html`. — done.
-5. Deploy the `notify-new-enquiry` Edge Function and wire up a Database Webhook — see the next section. — **not yet done.**
+5. Deploy the `notify-new-submission` Edge Function and wire up Database Webhooks — see the next section. — **not yet done.**
 
 ---
 
-## Email notification for the contact form
+## Email notification for the contact form and reviews
 
-The contact form already writes to `enquiries` correctly — this just adds an email alert on top. Code lives at `supabase/functions/notify-new-enquiry/index.ts`, which emails `cristina_cristina973@yahoo.com` via [Resend](https://resend.com) whenever a new enquiry is inserted.
+The contact form and review form already write to `enquiries` / `reviews` correctly — this just adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field Database Webhooks send) and emails `cristina_cristina973@yahoo.com` via [Resend](https://resend.com).
 
 1. **Create a free Resend account** at [resend.com](https://resend.com) and grab an API key (Settings → API Keys). No domain verification needed to start — the function uses Resend's shared `onboarding@resend.dev` sender, which works out of the box.
 2. **Set the secret** in the Supabase dashboard: Project Settings → Edge Functions → Secrets → add `RESEND_API_KEY` with the key from step 1. (Or via CLI: `supabase secrets set RESEND_API_KEY=re_xxx`.)
-3. **Deploy the function**: Edge Functions → Deploy a new function → name it `notify-new-enquiry` → paste in the contents of `supabase/functions/notify-new-enquiry/index.ts`. (Or via CLI: `supabase functions deploy notify-new-enquiry`.)
-4. **Create a Database Webhook**: Database → Webhooks → Create a new webhook →
-   - Table: `enquiries`
-   - Events: `Insert`
-   - Type: `Supabase Edge Functions`
-   - Edge Function: `notify-new-enquiry`
-   - HTTP method: `POST`
+3. **Deploy the function**: Edge Functions → Deploy a new function → name it `notify-new-submission` → paste in the contents of `supabase/functions/notify-new-submission/index.ts`. (Or via CLI: `supabase functions deploy notify-new-submission`.)
+4. **Create two Database Webhooks**: Database → Webhooks → Create a new webhook, once for each table —
+   - Webhook 1 — Table: `enquiries`, Events: `Insert`, Type: `Supabase Edge Functions`, Edge Function: `notify-new-submission`, HTTP method: `POST`
+   - Webhook 2 — Table: `reviews`, Events: `Insert`, Type: `Supabase Edge Functions`, Edge Function: `notify-new-submission`, HTTP method: `POST`
 
    This replaces writing a raw SQL trigger by hand — Supabase wires up the `pg_net` call and auth headers for you.
-5. **Test it**: submit the live contact form and confirm an email arrives at `cristina_cristina973@yahoo.com`. Check Edge Functions → `notify-new-enquiry` → Logs if it doesn't.
+5. **Test it**: submit the live contact form, then submit a review, and confirm an email arrives at `cristina_cristina973@yahoo.com` for each. Check Edge Functions → `notify-new-submission` → Logs if either doesn't fire.
 
 Once `cmearwaxremoval.co.uk` is verified as a sending domain in Resend (Domains → Add Domain, then add the DNS records they give you at IONOS), switch the `from` address in `index.ts` from `onboarding@resend.dev` to something like `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>` and redeploy.
 

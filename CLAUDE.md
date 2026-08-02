@@ -27,6 +27,8 @@ Defined in `.claude/commands/seo-sync.md`. Decides whether the traditional SEO f
 
 Real prices exist (£65 flat fee for ear wax removal regardless of method, £25 consultation-only if nothing needs removing) but the site deliberately shows "Contact me" / "get in touch" instead of the numbers in `src/App.tsx`, `index.html`, and `public/llms.txt` — this was a deliberate choice, not a placeholder. Don't reintroduce the numeric prices to the public-facing content without checking first.
 
-## Enquiry notification email
+## Enquiry & review notification email
 
-`supabase/functions/notify-new-enquiry/index.ts` emails `cristina_cristina973@yahoo.com` via Resend when a new row is inserted into `enquiries`, triggered by a Database Webhook (not a raw SQL trigger — see README "Email notification for the contact form"). Not yet deployed as of writing. Reviews don't have an equivalent notification — only enquiries were requested. Unlike restore-relax, this had to be written fresh since restore-relax's equivalent function isn't in git and can't be copied directly.
+`supabase/functions/notify-new-submission/index.ts` is a single Edge Function shared by two Database Webhooks (one on `enquiries` INSERT, one on `reviews` INSERT) — it branches on the `table` field Database Webhooks send, and emails `cristina_cristina973@yahoo.com` via Resend either way. Not a raw SQL trigger — see README "Email notification for the contact form and reviews" for deploy steps. Not yet deployed as of writing. Unlike restore-relax, this had to be written fresh since restore-relax's equivalent function isn't in git and can't be copied directly.
+
+Never embed the `RESEND_API_KEY` in client-side code (`src/`) — this is a public repo on a static GitHub Pages site, so anything shipped to the browser is extractable by anyone. The key must only ever live server-side, as a Supabase Edge Function secret.
