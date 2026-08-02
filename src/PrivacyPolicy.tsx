@@ -34,7 +34,7 @@ export default function PrivacyPolicy({ onClose }: { onClose: () => void }) {
 
         <div style={{ width: "24px", height: "2px", background: "#2CA9BC", marginBottom: "16px" }} />
         <h2 id="privacy-title" style={{ fontFamily: "'Manrope', sans-serif", fontSize: "1.5rem", color: "#0E5C68", fontWeight: 600, marginBottom: "6px" }}>Privacy Policy</h2>
-        <p style={{ fontSize: "0.85rem", color: "#9AB4B9", fontFamily: "'Inter', sans-serif", marginBottom: "32px" }}>CM Ear Wax Removal · Last updated July 2026</p>
+        <p style={{ fontSize: "0.85rem", color: "#9AB4B9", fontFamily: "'Inter', sans-serif", marginBottom: "32px" }}>CM Ear Wax Removal · Last updated August 2026</p>
 
         {section("Who we are", <p>CM Ear Wax Removal is a sole-trader ear health practice operated by Cristiana Mamularu, providing mobile microsuction and ear irrigation visits across Bentley, Hampshire and the surrounding area. This policy explains what personal data we collect through this website and how we use it.</p>)}
 
@@ -47,6 +47,12 @@ export default function PrivacyPolicy({ onClose }: { onClose: () => void }) {
         {section("How we use it", <p>Reviews (name and review text) are displayed publicly on this website so that other visitors can read about client experiences. Enquiry form submissions are used only to respond to your booking request or question, and are visible only to Cristiana. We do not use your data for marketing, share it with third parties, or use it for any purpose beyond these two uses.</p>)}
 
         {section("Where it is stored", <p>Review and enquiry data is stored securely in a database provided by <strong>Supabase</strong> (Supabase Inc.), hosted in the <strong>United Kingdom</strong> (London, eu-west-2 region). Supabase is GDPR-compliant and does not use your data for its own purposes. You can read their privacy policy at <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "#0E5C68" }}>supabase.com/privacy</a>.</p>)}
+
+        {section("Cookies & local storage", <>
+          <p style={{ marginBottom: "10px" }}>This website does not use cookies for advertising, tracking or analytics, and no cookie consent banner is shown because none are needed for those purposes.</p>
+          <p style={{ marginBottom: "10px" }}>The admin panel, used only by Cristiana to manage reviews and enquiries, uses your browser's <strong>local storage</strong> — not a cookie — to keep the admin session signed in between visits. This is essential to the admin login working and is never used to track visitors to the public site.</p>
+          <p>The coverage map on this page loads map tiles from <strong>OpenStreetMap</strong>. This means your browser makes a direct request to their servers, which may set their own cookies as part of serving those tiles — this is outside our control. See <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer" style={{ color: "#0E5C68" }}>OpenStreetMap's privacy policy</a> for details.</p>
+        </>)}
 
         {section("How long we keep it", <p>Reviews are kept for as long as this website is active. Enquiry messages are kept only as long as needed to respond to your request, and are deleted once actioned. If you would like your review or enquiry removed sooner, please contact us via WhatsApp, phone or email and we will delete it within 5 working days.</p>)}
 
