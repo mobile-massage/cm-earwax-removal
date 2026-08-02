@@ -27,6 +27,6 @@ Defined in `.claude/commands/seo-sync.md`. Decides whether the traditional SEO f
 
 Real prices exist (£65 flat fee for ear wax removal regardless of method, £25 consultation-only if nothing needs removing) but the site deliberately shows "Contact me" / "get in touch" instead of the numbers in `src/App.tsx`, `index.html`, and `public/llms.txt` — this was a deliberate choice, not a placeholder. Don't reintroduce the numeric prices to the public-facing content without checking first.
 
-## Review & enquiry notification email
+## Enquiry notification email
 
-Unlike restore-relax, this project needs a fresh Edge Function (`notify-new-enquiry`, and optionally `notify-new-review`) + Postgres trigger to email `info@cmearwaxremoval.co.uk` via Resend when a new enquiry or pending review is submitted — restore-relax's equivalent function isn't in git and can't be copied directly. See README for the Supabase schema this depends on.
+`supabase/functions/notify-new-enquiry/index.ts` emails `cristina_cristina973@yahoo.com` via Resend when a new row is inserted into `enquiries`, triggered by a Database Webhook (not a raw SQL trigger — see README "Email notification for the contact form"). Not yet deployed as of writing. Reviews don't have an equivalent notification — only enquiries were requested. Unlike restore-relax, this had to be written fresh since restore-relax's equivalent function isn't in git and can't be copied directly.
