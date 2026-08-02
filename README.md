@@ -17,7 +17,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] Logo cropped from the practitioner's business card, stock photography sourced (Unsplash License, free for commercial use)
 - [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
-- [x] `notify-new-submission` Edge Function (Resend email) — deployed, wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), sending domain `cmearwaxremoval.co.uk` verified in Resend. Confirmed working end-to-end: inserting into `enquiries` triggers a real `200` from Resend and an email lands at `cristina_cristina973@yahoo.com` — see "Email notification for the contact form and reviews" below
+- [x] `notify-new-submission` Edge Function (Resend email) — deployed, wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), sending domain `cmearwaxremoval.co.uk` verified in Resend. Confirmed working end-to-end for both `enquiries` and `reviews`: each triggers a real `200` from Resend and emails land at all three recipients (`cristina_cristina973@yahoo.com`, `info@cmearwaxremoval.co.uk`, `craig@quaydale.com`) — see "Email notification for the contact form and reviews" below
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [x] DNS cut over at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages. Custom domain enabled in Pages settings, HTTPS certificate approved (covers both the apex and `www`). Canonical domain is the **apex** (`cmearwaxremoval.co.uk`, no `www`) — all canonical URLs, JSON-LD `@id`/`url`, sitemap, robots.txt and llms.txt point there. HTTPS enforcement is not yet turned on in Pages settings — **not yet done**
 - [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
@@ -77,7 +77,7 @@ The admin panel loads at `/admin.html`. Both are fully wired up against the live
 Already done for this project (project `volydinbgoelrtfzbeck`, live). Kept here for reference / in case of a rebuild. The admin emails below are redacted to placeholders since this is a public repo — the real values are configured directly in the live Supabase project's RLS policies, not committed anywhere in this repo.
 
 1. Create a new Supabase project (suggest `eu-west-2`, matching restore-relax).
-2. Run this schema, substituting the real admin email addresses for `<admin-email-1>` / `<admin-email-2>`:
+2. Run this schema, substituting the real admin email addresses for `<admin-email-1>` .. `<admin-email-4>` (currently 4 allow-listed identities live — see note below):
 
 ```sql
 create table reviews (
@@ -107,23 +107,25 @@ create policy "Public can read approved reviews" on reviews
 create policy "Public can submit reviews" on reviews
   for insert with check (true);
 create policy "Admins can read all reviews" on reviews
-  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 create policy "Admins can update reviews" on reviews
-  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 create policy "Admins can delete reviews" on reviews
-  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 
 create policy "Public can submit enquiries" on enquiries
   for insert with check (true);
 create policy "Admins can read enquiries" on enquiries
-  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 create policy "Admins can update enquiries" on enquiries
-  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for update using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 create policy "Admins can delete enquiries" on enquiries
-  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>'));
+  for delete using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 ```
 
-3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the two allow-listed emails only, enforced by RLS as defense-in-depth). — confirmed done and verified (public signup returns `signup_disabled`).
+Admin allow-list was expanded from 2 to 4 identities directly against the live database via the SQL Editor (`alter policy ... using (...)` on all six `Admins can ...` policies) — not committed as a migration file, since the migration would need to contain the actual admin email addresses and this is a public repo. The real list is only in the live Supabase project's policies.
+
+3. Disable public sign-ups in Supabase Auth settings (admin access is via magic link to the allow-listed emails only, enforced by RLS as defense-in-depth). — confirmed done and verified (public signup returns `signup_disabled`).
 4. Update `src/supabase.ts` with the project URL + publishable key, and the CSP `connect-src` in `index.html`. — done.
 5. Deploy the `notify-new-submission` Edge Function and wire up Database Webhooks — see the next section. — **not yet done.**
 
@@ -131,9 +133,9 @@ create policy "Admins can delete enquiries" on enquiries
 
 ## Email notification for the contact form and reviews
 
-**Status: done — deployed, verified end-to-end, real emails delivering to `cristina_cristina973@yahoo.com`.**
+**Status: done — deployed, verified end-to-end, real emails delivering to all three recipients.**
 
-The contact form and review form already write to `enquiries` / `reviews` correctly — this adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails `cristina_cristina973@yahoo.com` via [Resend](https://resend.com), sending from `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>`.
+The contact form and review form already write to `enquiries` / `reviews` correctly — this adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails `cristina_cristina973@yahoo.com`, `info@cmearwaxremoval.co.uk`, and `craig@quaydale.com` via [Resend](https://resend.com), sending from `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>`.
 
 What's set up:
 

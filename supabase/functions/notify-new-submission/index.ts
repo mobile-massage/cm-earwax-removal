@@ -1,11 +1,11 @@
 // Supabase Edge Function: notify-new-submission
 //
 // Invoked by two SQL triggers (supabase/migrations/) on INSERT into
-// `enquiries` and `reviews`. Emails cristina_cristina973@yahoo.com via
-// Resend so nothing sits unnoticed in the database. See README.md "Email
+// `enquiries` and `reviews`. Emails the addresses below via Resend so
+// nothing sits unnoticed in the database. See README.md "Email
 // notification for the contact form and reviews" for deploy steps.
 
-const NOTIFY_TO = "cristina_cristina973@yahoo.com";
+const NOTIFY_TO = ["cristina_cristina973@yahoo.com", "info@cmearwaxremoval.co.uk", "craig@quaydale.com"];
 
 function escapeHtml(str: string): string {
   return String(str)
@@ -83,7 +83,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>",
-        to: [NOTIFY_TO],
+        to: NOTIFY_TO,
         ...(email.replyTo ? { reply_to: email.replyTo } : {}),
         subject: email.subject,
         html: email.html,
