@@ -4,8 +4,12 @@
 // `enquiries` and `reviews`. Emails the addresses below via Resend so
 // nothing sits unnoticed in the database. See README.md "Email
 // notification for the contact form and reviews" for deploy steps.
+//
+// The real recipient list only exists in the live Edge Function (deployed
+// via the Supabase dashboard, not synced from this file) — this repo is
+// public, so the personal addresses are redacted here.
 
-const NOTIFY_TO = ["cristina_cristina973@yahoo.com", "info@cmearwaxremoval.co.uk", "craig@quaydale.com"];
+const NOTIFY_TO = ["<notify-email-1>", "info@cmearwaxremoval.co.uk", "<notify-email-2>"];
 
 function escapeHtml(str: string): string {
   return String(str)

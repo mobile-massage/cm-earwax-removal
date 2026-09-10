@@ -17,7 +17,7 @@ Built as a sibling project to [restore-relax](https://github.com/Quaydale/restor
 - [x] Logo cropped from the practitioner's business card, stock photography sourced (Unsplash License, free for commercial use)
 - [x] Supabase project live (`volydinbgoelrtfzbeck.supabase.co`, under a separate account from restore-relax's org). `reviews` + `enquiries` tables and RLS policies applied from the schema below. `src/supabase.ts` and the CSP in `index.html` point at the real project
 - [x] GitHub repo created, GitHub Pages enabled, serving `docs/` from `main` at the `github.io` URL above
-- [x] `notify-new-submission` Edge Function (Resend email) — deployed, wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), sending domain `cmearwaxremoval.co.uk` verified in Resend. Confirmed working end-to-end for both `enquiries` and `reviews`: each triggers a real `200` from Resend and emails land at all three recipients (`cristina_cristina973@yahoo.com`, `info@cmearwaxremoval.co.uk`, `craig@quaydale.com`) — see "Email notification for the contact form and reviews" below
+- [x] `notify-new-submission` Edge Function (Resend email) — deployed, wired up via SQL trigger (not the dashboard's Database Webhooks UI, which errored on this project — see below), sending domain `cmearwaxremoval.co.uk` verified in Resend. Confirmed working end-to-end for both `enquiries` and `reviews`: each triggers a real `200` from Resend and emails land at all three recipients (real addresses only live in the deployed Edge Function — see "Email notification for the contact form and reviews" below)
 - [x] Pricing decided (£65 flat fee, £25 consultation-only) but deliberately not shown publicly — site says "Contact me" / "get in touch" instead, across App.tsx, index.html JSON-LD and llms.txt
 - [x] DNS cut over at the domain registrar (IONOS) to point `cmearwaxremoval.co.uk` at GitHub Pages. Custom domain enabled in Pages settings, HTTPS certificate approved (covers both the apex and `www`). Canonical domain is the **apex** (`cmearwaxremoval.co.uk`, no `www`) — all canonical URLs, JSON-LD `@id`/`url`, sitemap, robots.txt and llms.txt point there. HTTPS enforcement is not yet turned on in Pages settings — **not yet done**
 - [x] Supabase keep-alive — the free-tier project auto-pauses after ~7 days of inactivity (this happened once already, breaking the live contact form until manually restored from the Supabase dashboard). `.github/workflows/supabase-keep-alive.yml` pings the REST API every 3 days to prevent it recurring
@@ -105,7 +105,7 @@ alter table enquiries enable row level security;
 create policy "Public can read approved reviews" on reviews
   for select using (status = 'approved');
 create policy "Public can submit reviews" on reviews
-  for insert with check (true);
+  for insert with check (status = 'pending' and approved = false);
 create policy "Admins can read all reviews" on reviews
   for select using (auth.email() in ('<admin-email-1>', '<admin-email-2>', '<admin-email-3>', '<admin-email-4>'));
 create policy "Admins can update reviews" on reviews
@@ -135,7 +135,7 @@ Admin allow-list was expanded from 2 to 4 identities directly against the live d
 
 **Status: done — deployed, verified end-to-end, real emails delivering to all three recipients.**
 
-The contact form and review form already write to `enquiries` / `reviews` correctly — this adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails `cristina_cristina973@yahoo.com`, `info@cmearwaxremoval.co.uk`, and `craig@quaydale.com` via [Resend](https://resend.com), sending from `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>`.
+The contact form and review form already write to `enquiries` / `reviews` correctly — this adds an email alert on top of both. One function, `supabase/functions/notify-new-submission/index.ts`, handles both tables (it branches on the `table` field it's sent) and emails three recipients (the practitioner, the business inbox, and the developer) via [Resend](https://resend.com), sending from `CM Ear Wax Removal <enquiries@cmearwaxremoval.co.uk>`. The real recipient addresses are only set in the deployed Edge Function (dashboard), not committed to this public repo — `index.ts` here has placeholders in their place.
 
 What's set up:
 
