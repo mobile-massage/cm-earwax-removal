@@ -2,9 +2,14 @@ name: Supabase Keep-Alive
 
 on:
   schedule:
-    # Every 3 days at 06:00 UTC — well under Supabase's 7-day free-tier
-    # auto-pause window, so the project never sits idle long enough to pause.
-    - cron: "0 6 */3 * *"
+    # Daily at 06:00 UTC. Previously ran every 3 days, but the project
+    # still auto-paused on 2026-09-10 despite that — a plain anonymous
+    # SELECT via PostgREST evidently isn't reliable signal for Supabase's
+    # own inactivity tracker even when it reaches the real backend
+    # (confirmed non-cached, real query time). Running daily as extra
+    # insurance, and any non-200 result now fails the job (not just a
+    # warning) so GitHub's default failed-scheduled-workflow email fires.
+    - cron: "0 6 * * *"
   workflow_dispatch: {}
 
 jobs:
@@ -13,10 +18,11 @@ jobs:
     steps:
       - name: Ping Supabase REST API
         run: |
-          status=$(curl -s -o /dev/null -w "%{http_code}" \
+          http_status=$(curl -s -o /dev/null -w "%{http_code}" \
             "https://volydinbgoelrtfzbeck.supabase.co/rest/v1/reviews?select=id&limit=1" \
-            -H "apikey: sb_publishable_153a1iqYQdboXq2lJ7HpAg_m2sZT3IG")
-          echo "Supabase responded with HTTP $status"
-          if [ "$status" -ge 500 ]; then
-            echo "::warning::Supabase project may be paused or unreachable (HTTP $status)"
+            -H "apikey: sb_publishable_153a1iqYQdboXq2lJ7HpAg_m2sZT3IG") || http_status="000"
+          echo "Supabase responded with HTTP $http_status"
+          if [ "$http_status" != "200" ]; then
+            echo "::error::Supabase project unreachable or erroring (HTTP $http_status) — it may be paused. Check the dashboard."
+            exit 1
           fi
